@@ -13,7 +13,7 @@ from trakt.mixins import IdsMixin
 from trakt.utils import slugify, timestamp
 
 __author__ = 'Jon Nappi'
-__all__ = ['Scrobbler', 'comment', 'rate', 'add_to_history', 'get_collection',
+__all__ = ['Scrobbler', 'comment', 'rate', 'add_to_history', 'get_history', 'get_collection',
            'PlaybackEntry', 'get_playback',
            'get_watchlist', 'add_to_watchlist', 'remove_from_history',
            'remove_from_watchlist', 'add_to_collection',
@@ -117,6 +117,26 @@ def add_to_history(media, watched_at=None):
             })
 
     result = yield 'sync/history', media_object
+    yield result
+
+
+@get
+def get_history(media_type=None, trakt_id=None):
+    valid_type = ("movies", "shows", "seasons", "episodes")
+
+    if media_type and media_type not in valid_type:
+        raise ValueError(f"Invalid media_type: {media_type}. Must be one of {valid_type}")
+
+    if trakt_id and not media_type:
+        raise ValueError("trakt_id provided but missing media_type")
+
+    uri = "sync/history"
+    if media_type:
+        uri += f"/{media_type}"
+        if trakt_id:
+            uri += f"/{trakt_id}"
+
+    result = yield uri
     yield result
 
 
