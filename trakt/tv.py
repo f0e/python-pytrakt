@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interfaces to all of the TV objects offered by the Trakt.tv API"""
+
 from datetime import datetime, timedelta
 from typing import NamedTuple
 from urllib.parse import urlencode
@@ -484,6 +485,7 @@ class TVShow(IdsMixin):
     def watching_now(self):
         """A list of all :class:`User`'s watching a movie."""
         from .users import User
+
         data = yield self.ext + '/watching'
         users = []
         for user in data:

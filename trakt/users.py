@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interfaces to all of the User objects offered by the Trakt.tv API"""
+
 from dataclasses import dataclass
 from typing import Any, NamedTuple, Optional, Union
 
@@ -324,6 +325,7 @@ class UserList(DataClassMixin(ListDescription), IdsMixin):
 
 class User:
     """A Trakt.tv User"""
+
     def __init__(self, username, **kwargs):
         super().__init__()
         self.username = username
@@ -635,6 +637,7 @@ class User:
     def __str__(self):
         """String representation of a :class:`User`"""
         return '<User>: {}'.format(self.username)
+
     __repr__ = __str__
 
 

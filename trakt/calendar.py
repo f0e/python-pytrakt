@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interfaces to all of the Calendar objects offered by the Trakt.tv API"""
+
 from pprint import pformat
 
 from trakt.core import get
@@ -17,6 +18,7 @@ class Calendar:
     """Base :class:`Calendar` type serves as a foundation for other Calendar
     types
     """
+
     url = None
 
     def __init__(self, date=None, days=7, extended=None):
@@ -49,6 +51,7 @@ class Calendar:
     def __str__(self):
         """str representation of this Calendar"""
         return pformat(self._calendar)
+
     __repr__ = __str__
 
     @property
@@ -89,6 +92,7 @@ class Calendar:
 
 class PremiereCalendar(Calendar):
     """All shows premiering during the time period specified."""
+
     url = 'calendars/all/shows/new'
 
 
@@ -96,26 +100,31 @@ class MyPremiereCalendar(Calendar):
     """Personalized calendar of all shows premiering during the time period
     specified.
     """
+
     url = 'calendars/my/shows/new'
 
 
 class ShowCalendar(Calendar):
     """TraktTV ShowCalendar"""
+
     url = 'calendars/all/shows'
 
 
 class MyShowCalendar(Calendar):
     """Personalized TraktTV ShowCalendar"""
+
     url = 'calendars/my/shows'
 
 
 class SeasonCalendar(Calendar):
     """TraktTV TV Show Season Premiere"""
+
     url = 'calendars/all/shows/premieres'
 
 
 class MySeasonCalendar(Calendar):
     """Personalized TraktTV TV Show Season Premiere"""
+
     url = 'calendars/my/shows/premieres'
 
 
@@ -123,6 +132,7 @@ class MovieCalendar(Calendar):
     """TraktTV Movie Calendar. Returns all movies with a release date during
     the time period specified.
     """
+
     url = 'calendars/all/movies'
 
     def _build(self, data):
@@ -138,4 +148,5 @@ class MovieCalendar(Calendar):
 
 class MyMovieCalendar(MovieCalendar):
     """Personalized TraktTV Movie Calendar."""
+
     url = 'calendars/my/movies'

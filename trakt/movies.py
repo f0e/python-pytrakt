@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interfaces to all of the Movie objects offered by the Trakt.tv API"""
+
 from typing import NamedTuple
 
 from trakt.core import Alias, Comment, Genre, delete, get
@@ -91,6 +92,7 @@ class Release(NamedTuple):
 
 class Movie(IdsMixin):
     """A Class representing a Movie object"""
+
     def __init__(self, title, year=None, slug=None, **kwargs):
         super().__init__()
         self.media_type = 'movies'
@@ -179,6 +181,7 @@ class Movie(IdsMixin):
         """
         # TODO (jnappi) Pagination
         from trakt.users import User
+
         data = yield self.ext + '/comments'
         self._comments = []
         for com in data:
@@ -249,6 +252,7 @@ class Movie(IdsMixin):
     def watching_now(self):
         """A list of all :class:`User`'s watching a movie."""
         from trakt.users import User
+
         data = yield self.ext + '/watching'
         users = []
         for user in data:
@@ -258,6 +262,7 @@ class Movie(IdsMixin):
     def add_to_library(self):
         """Add this :class:`Movie` to your library."""
         return add_to_collection(self)
+
     add_to_collection = add_to_library
 
     def add_to_watchlist(self):
@@ -322,6 +327,7 @@ class Movie(IdsMixin):
     def remove_from_library(self):
         """Remove this :class:`Movie` from your library."""
         return remove_from_collection(self)
+
     remove_from_collection = remove_from_library
 
     def remove_from_watchlist(self):
@@ -377,4 +383,5 @@ class Movie(IdsMixin):
     def __str__(self):
         """String representation of a :class:`Movie`"""
         return '<Movie>: {}'.format(self.title)
+
     __repr__ = __str__

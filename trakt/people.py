@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Interfaces to all of the People objects offered by the Trakt.tv API"""
+
 from trakt.core import get
 from trakt.mixins import IdsMixin
 from trakt.sync import search
@@ -12,6 +13,7 @@ __all__ = ['Person', 'ActingCredit', 'CrewCredit', 'Credits', 'MovieCredits',
 
 class Person(IdsMixin):
     """A Class representing a trakt.tv Person such as an Actor or Director"""
+
     def __init__(self, name, slug=None, **kwargs):
         super().__init__()
         self.name = name
@@ -103,6 +105,7 @@ class Person(IdsMixin):
     def __str__(self):
         """String representation of a :class:`Person`"""
         return '<Person>: {0}'.format(self.name)
+
     __repr__ = __str__
 
 
@@ -110,6 +113,7 @@ class ActingCredit:
     """An individual credit for a :class:`Person` who played a character in a
     Movie or TV Show
     """
+
     def __init__(self, character, media):
         self.character = character
         self.media = media
@@ -128,6 +132,7 @@ class CrewCredit:
     """An individual crew credit for a :class:`Person` who had an off-screen
     job on a Movie or a TV Show
     """
+
     def __init__(self, job, media):
         self.job = job
         self.media = media
@@ -146,6 +151,7 @@ class Credits:
     """A base type representing a :class:`Person`'s credits for Movies or TV
     Shows
     """
+
     MEDIA_KEY = None
 
     def __init__(self, **kwargs):
@@ -190,19 +196,23 @@ class Credits:
 
 class MovieCredits(Credits):
     """A collection of cast and crew credits for a Movie"""
+
     MEDIA_KEY = 'movie'
 
     def _extract_media(self, media):
         from trakt.movies import Movie
+
         data = media.get(self.MEDIA_KEY)
         return Movie(**data)
 
 
 class TVCredits(Credits):
     """A collection of cast and crew credits for a TV Show"""
+
     MEDIA_KEY = 'show'
 
     def _extract_media(self, media):
         from trakt.tv import TVShow
+
         data = media.get(self.MEDIA_KEY)
         return TVShow(**data)
