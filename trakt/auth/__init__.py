@@ -73,3 +73,5 @@ def init_auth(method: str, *args, client_id=None, client_secret=None, store=Fals
 
     if store:
         config.store()
+
+    return config
